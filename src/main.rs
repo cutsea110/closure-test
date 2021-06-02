@@ -47,6 +47,12 @@ where
 fn main() {
     println!("Hello, world!");
 
+    let x = vec![1, 2, 3];
+    let eq_to_x = |z| z == x;
+    println!("{:?}", x);
+    let y = vec![1, 2, 3];
+    assert!(eq_to_x(y));
+
     println!("twice with add1 for 4: {}", twice(add1)(4));
     println!("twice with double for 4: {}", twice(double)(4));
 
