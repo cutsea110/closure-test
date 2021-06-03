@@ -53,6 +53,15 @@ fn main() {
     let y = vec![1, 2, 3];
     assert!(eq_to_x(y));
 
+    let v1 = vec![1, 2, 3, 4, 5];
+    let v1_iter = v1.iter();
+    let total: i32 = v1_iter.sum();
+    assert_eq!(total, 15);
+    let v1_iter = v1.iter();
+    for v in v1_iter {
+        println!("{:?}", v);
+    }
+
     println!("twice with add1 for 4: {}", twice(add1)(4));
     println!("twice with double for 4: {}", twice(double)(4));
 
