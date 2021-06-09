@@ -1,16 +1,22 @@
-fn addN(n: u32) -> impl Fn(u32) -> u32 {
+fn add_n(n: u32) -> impl Fn(u32) -> u32 {
     move |x| x + n
 }
 
 fn add1(x: u32) -> u32 {
-    (addN(1))(x)
+    (add_n(1))(x)
 }
 
-fn twice(f: Box<dyn Fn(u32) -> u32>) -> Box<dyn Fn(u32) -> u32> {
-    Box::new(move |x| f(f(x)))
+fn twice<F>(f: F) -> impl Fn(u32) -> u32
+where
+    F: Fn(u32) -> u32,
+{
+    move |x| f(f(x))
 }
 
-fn apply_twice<F: Fn(u32) -> u32>(f: F, x: u32) -> u32 {
+fn apply_twice<F>(f: F, x: u32) -> u32
+where
+    F: Fn(u32) -> u32,
+{
     f(f(x))
 }
 
