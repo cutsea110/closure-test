@@ -1,27 +1,21 @@
-fn create_fn() -> impl Fn() {
-    let text = "Fn".to_owned();
-
-    move || println!("This is a: {}", text)
+fn addN(n: u32) -> impl Fn(u32) -> u32 {
+    move |x| x + n
 }
 
-fn create_fnmut() -> impl FnMut() {
-    let text = "FnMut".to_owned();
-
-    move || println!("This is a: {}", text)
+fn add1(x: u32) -> u32 {
+    (addN(1))(x)
 }
 
-fn create_fnonce() -> impl FnOnce() {
-    let text = "FnOnce".to_owned();
+fn twice(f: Box<dyn Fn(u32) -> u32>) -> Box<dyn Fn(u32) -> u32> {
+    Box::new(move |x| f(f(x)))
+}
 
-    move || println!("This is a: {}", text)
+fn apply_twice<F: Fn(u32) -> u32>(f: F, x: u32) -> u32 {
+    f(f(x))
 }
 
 fn main() {
-    let fn_plain = create_fn();
-    let mut fn_mut = create_fnmut();
-    let fn_once = create_fnonce();
-
-    fn_plain();
-    fn_mut();
-    fn_once();
+    println!("{}", add1(3));
+    println!("{}", (twice(Box::new(add1)))(3));
+    println!("{}", (apply_twice(add1, 3)));
 }
