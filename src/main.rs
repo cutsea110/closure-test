@@ -55,5 +55,9 @@ fn main() {
         Err(e) => println!("error: {:?}", e),
     }
 
-    println!("{}", first_word("hello world cutsea110!"));
+    let child = thread::spawn(move || first_word("hello world cutsea110"));
+    match child.join() {
+        Ok(wd) => println!("{}", wd),
+        Err(e) => println!("error: {:?}", e),
+    }
 }
