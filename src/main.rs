@@ -32,6 +32,18 @@ async fn async_add1(x: u32) -> Result<u32, Error> {
     Ok(f(x))
 }
 
+fn first_word(s: &str) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
+}
+
 fn main() {
     println!("{}", add1(3));
     println!("{}", (twice(Box::new(add1)))(3));
@@ -42,4 +54,6 @@ fn main() {
         Ok(n) => println!("{}", n),
         Err(e) => println!("error: {:?}", e),
     }
+
+    println!("{}", first_word("hello world cutsea110!"));
 }
